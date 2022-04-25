@@ -23,17 +23,31 @@ for (var i = 0; i < persons.length; i++) {
     let id = persons[i].id;
     if ((id != 'start') || (id != 'finish')) {
         document.getElementById(id).addEventListener("mouseover",
-        function() {
-            over(id, 1);
-            setTimeout(function() {
-                document.getElementById(id).scrollIntoView({inline: "center", behavior: "smooth"});
-            }, 200);
-
-        }, false);
+            function() {
+                over(id, 1);
+                setTimeout(function() {
+                    document.getElementById(id).scrollIntoView({
+                        inline: "center", behavior: "smooth"});
+                }, 200);
+            }, false);
         document.getElementById(id).addEventListener("mouseout",
-        function() {
-            over(id, 0) }, false);
+            function() {
+                over(id, 0) }, false);
     }
 }
 
-document.getElementById('michael').scrollIntoView({inline: "center", behavior: "smooth"});
+document.getElementById('michael').scrollIntoView({
+    inline: "center", behavior: "smooth"});
+
+circle = document.querySelector('.circle');
+
+document.body.addEventListener("mouseover",
+    function(event) {
+        // console.log(event);
+        // console.log(event.pageX);
+        // console.log(event.pageY);
+        let circleLeft = event.pageX - (circle.clientWidth / 2);
+        let circleTop = event.pageY - (circle.clientHeight / 2);
+        circle.style.top = circleTop + 'px';
+        circle.style.left = circleLeft + 'px';
+    }, false);
