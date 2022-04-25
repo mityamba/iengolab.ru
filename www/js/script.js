@@ -18,6 +18,49 @@ function over(elem, x) {
 
 }
 
+
+const student = [   ['michael', 'Михаил'],
+                    ['danil', 'Данил'],
+                    ['luba', 'Люба'],
+                    ['sergey', 'Сергей'],
+                    ['stepan', 'Степан'],
+                    ['tuskul', 'Тускул'],
+                    ['venera', 'Венера'],
+                    ['sakhaya', 'Сахаайа'],
+                    ['valeria', 'Валерия']   ];
+
+function createPerson(id, name) {
+    var divPerson = document.querySelector('.person');
+
+    let divPersonBlock = document.createElement('div');
+    divPersonBlock.className = 'person__card';
+    divPersonBlock.id = id;
+
+    let divPersonBlockImg = document.createElement('div');
+    divPersonBlockImg.className = 'person__img';
+    let link = 'img/person/' + id + '.svg';
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', link, false);
+    xhr.send();
+    let list = xhr.responseText;
+    console.log(list);
+    divPersonBlockImg.innerHTML = list;
+
+    let divPersonBlockName = document.createElement('div');
+    divPersonBlockName.className = 'person__name';
+    divPersonBlockName.innerHTML = name;
+
+    divPersonBlock.append(divPersonBlockImg);
+    divPersonBlock.append(divPersonBlockName);
+
+    divPerson.append(divPersonBlock);
+}
+
+for (var i = 0; i < student.length; i++) {
+    createPerson(student[i][0], student[i][1]);
+}
+
+
 var persons = document.querySelectorAll('.person__card');
 console.log(persons.length);
 for (var i = 0; i < persons.length; i++) {
@@ -76,29 +119,3 @@ document.body.addEventListener("mouseover",
         circle.style.top = circleTop + 'px';
         circle.style.left = circleLeft + 'px';
     }, false);
-
-
-var divPerson = document.querySelector('.person');
-
-let divPersonBlock = document.createElement('div');
-divPersonBlock.className = 'person__card';
-divPersonBlock.id = 'stepan';
-
-let divPersonBlockImg = document.createElement('div');
-divPersonBlockImg.className = 'person__img';
-let link = 'img/person/luba.svg';
-let xhr = new XMLHttpRequest();
-xhr.open('GET', link, false);
-xhr.send();
-let list = xhr.responseText;
-console.log(list);
-divPersonBlockImg.innerHTML = list;
-
-let divPersonBlockName = document.createElement('div');
-divPersonBlockName.className = 'person__name';
-divPersonBlockName.innerHTML = 'Степан';
-
-divPersonBlock.append(divPersonBlockImg);
-divPersonBlock.append(divPersonBlockName);
-
-divPerson.append(divPersonBlock);
