@@ -1,6 +1,9 @@
 body {
     margin: 0;
     font-family: 'Montserrat';
+    /*  vh - сокращение от view-height,
+        то есть максимальная видимая высота окна
+        vw - соответственно view-width */
     max-height: 100vh;
     width: 100%;
 }
@@ -130,22 +133,26 @@ body {
     z-index: 1001;
 }
 
-path {
-    transition: 0.25s;
-}
-
 .footer_nav {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     color: rgba(244, 244, 244, 0.8);
-    margin: 0 8%;
+    margin: 0 10%;
     text-decoration: underline;
     cursor: pointer;
 }
 
+path {
+    transition: 0.25s;
+}
+
+/* стили для экранов с максимальной шириной в 480 пикселей */
 @media screen and (max-width: 480px) {
     .main {
         padding: 0px;
+    }
+    .footer_nav {
+        margin: 0 5%;
     }
 }
