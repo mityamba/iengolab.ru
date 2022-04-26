@@ -2,34 +2,54 @@ k = 0;
 
 function over(elem, x) {
 
-    let id = '#' + elem;
-    let person = document.querySelector(id + '> div.person__img');
-    let person_name = document.querySelector(id + '> div.person__name');
-    let person_img = document.querySelector(id + '> div.person__img > svg > path');
-    if (x == 1) {
-        person.style.transform = 'scale(1.04) translate(0px, -16px)';
-        person_name.style.color = '#D64646';
-        person_img.style.fill = '#D64646';
-    } else {
-        person.style.transform = 'scale(1)';
-        person_name.style.color = '#111111';
-        person_img.style.fill = '#111111';
+    let format = '';
+    for (var i = 0; i < student.length; i++) {
+        if (student[i][0] == elem) {
+            format = student[i][1];
+        }
     }
+    let id = '#' + elem;
+    let person = document.querySelector(id + ' > div.person__img');
+    let person_name = document.querySelector(id + ' > div.person__name');
 
+    if (format == 'svg') {
+        let person_img = document.querySelector(id + ' > div.person__img > svg > path');
+        if (x == 1) {
+            person.style.transform = 'scale(1.04) translate(0px, -16px)';
+            person_name.style.color = '#D64646';
+            person_img.style.fill = '#D64646';
+        } else {
+            person.style.transform = 'scale(1)';
+            person_name.style.color = '#111111';
+            person_img.style.fill = '#111111';
+        }
+    } else {
+        let person_img = document.querySelector(id + ' > div.person__img > img');
+        if (x == 1) {
+            person.style.transform = 'scale(1.04) translate(0px, -16px)';
+            person_name.style.color = '#D64646';
+            person_img.style.filter = 'saturate(2.75) brightness(2.75) hue-rotate(125deg) contrast(1)';
+        } else {
+            person.style.transform = 'scale(1)';
+            person_name.style.color = '#111111';
+            person_img.style.filter = 'none';
+        }
+    }
 }
 
+const student = [
+                    ['michael', 'svg', 'Михаил'],
+                    ['danil', 'png', 'Данил'],
+                    ['luba', 'png', 'Люба'],
+                    ['sergey', 'svg', 'Сергей'],
+                    ['stepan', 'png', 'Степан'],
+                    ['tuskul', 'svg', 'Тускул'],
+                    ['venera', 'svg', 'Венера'],
+                    ['sakhaya', 'svg', 'Сахаайа'],
+                    ['valeria', 'svg', 'Валерия']
+                ];
 
-const student = [   ['michael', 'Михаил'],
-                    ['danil', 'Данил'],
-                    ['luba', 'Люба'],
-                    ['sergey', 'Сергей'],
-                    ['stepan', 'Степан'],
-                    ['tuskul', 'Тускул'],
-                    ['venera', 'Венера'],
-                    ['sakhaya', 'Сахаайа'],
-                    ['valeria', 'Валерия']   ];
-
-function createPerson(id, name) {
+function createPerson(id, format, name) {
     var divPerson = document.querySelector('.person');
 
     let divPersonBlock = document.createElement('div');
@@ -38,13 +58,19 @@ function createPerson(id, name) {
 
     let divPersonBlockImg = document.createElement('div');
     divPersonBlockImg.className = 'person__img';
-    let link = 'img/person/' + id + '.svg';
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', link, false);
-    xhr.send();
-    let list = xhr.responseText;
-    console.log(list);
-    divPersonBlockImg.innerHTML = list;
+
+    if (format == 'svg') {
+        let link = 'img/person/' + id + '.svg';
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', link, false);
+        xhr.send();
+        let list = xhr.responseText;
+        divPersonBlockImg.innerHTML = list;
+    } else {
+        let link = 'img/person/' + id + '.' + format;
+        let list = '<img src="' + link + '" />';
+        divPersonBlockImg.innerHTML = list;
+    }
 
     let divPersonBlockName = document.createElement('div');
     divPersonBlockName.className = 'person__name';
@@ -57,12 +83,13 @@ function createPerson(id, name) {
 }
 
 for (var i = 0; i < student.length; i++) {
-    createPerson(student[i][0], student[i][1]);
+    createPerson(student[i][0], student[i][1], student[i][2]);
 }
 
 
 var persons = document.querySelectorAll('.person__card');
 console.log(persons.length);
+
 for (var i = 0; i < persons.length; i++) {
 
     let id = persons[i].id;
@@ -77,7 +104,6 @@ for (var i = 0; i < persons.length; i++) {
                         });
                     }, 200);
                 }
-
             }, false);
         document.getElementById(id).addEventListener("mouseout",
             function() {
@@ -88,7 +114,6 @@ for (var i = 0; i < persons.length; i++) {
                 for (var n = 0; n < persons.length; n++) {
                     if (persons[n].id != id) {
                         persons[n].style.opacity = 0.1;
-
                     } else {
                         persons[n].style.opacity = 1;
                         setTimeout(function() {
