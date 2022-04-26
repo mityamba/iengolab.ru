@@ -37,6 +37,9 @@ const student = [
 // больше 0 - был клик
 k = 0;
 
+// находим объект с классом circle
+circle = document.querySelector('.circle');
+
 // функция для изменения css-стиля карточек, где:
 // elem - id объекта,
 // x - коэффициент изменения объекта: 1 - на активный, 0 - не активный
@@ -75,24 +78,28 @@ function over(elem, x) {
             // изменяем css-параметры объектов
             // применяем трансформацию для объекта, которая изменит только визуальный вид,
             // не затрагивая реальные границы объекта
-            person.style.transform = 'scale(1.04) translate(0px, -16px)';
+            person.style.transform = 'scale(1.04) translate(0px, -8px)';
             person_name.style.color = '#D64646';
+            person_name.style.fontSize = '28px';
             person_img.style.fill = '#D64646';
         } else {
             person.style.transform = 'scale(1)';
             person_name.style.color = '#111111';
+            person_name.style.fontSize = '24px';
             person_img.style.fill = '#111111';
         }
     } else {
         let person_img = document.querySelector(id + ' > div.person__img > img');
         if (x == 1) {
-            person.style.transform = 'scale(1.04) translate(0px, -16px)';
+            person.style.transform = 'scale(1.04) translate(0px, -8px)';
             person_name.style.color = '#D64646';
+            person_name.style.fontSize = '28px';
             // для изменения цвета растровых изображений применяются css-фильтры
             person_img.style.filter = 'saturate(2.75) brightness(2.75) hue-rotate(125deg) contrast(1)';
         } else {
             person.style.transform = 'scale(1)';
             person_name.style.color = '#111111';
+            person_name.style.fontSize = '24px';
             person_img.style.filter = 'none';
         }
     }
@@ -136,6 +143,77 @@ function createPerson(id, format, name) {
     divPersonBlock.append(divPersonBlockName);
     // включаем карточки в состав основного блока
     divPerson.append(divPersonBlock);
+
+    // событие при наведении курсора на объект - mouseover
+    document.getElementById(id).addEventListener("mouseover",
+        function() {
+            // вызываем функцию для активации объектов
+            over(id, 1);
+            if (k == 0) {
+                // setTimeout(function() {
+                //     // скроллим по горизотали до объекта, на которую указываем
+                //     // пытаемся задать плавную прокрутку - smooth
+                //     document.getElementById(id).scrollIntoView({
+                //         inline: "center",
+                //         behavior: "smooth"
+                //     });
+                // }, 600);
+            }
+        }, false);
+
+    // событие при отводе курсора на объекта - mouseout
+    document.getElementById(id).addEventListener("mouseout",
+        function() {
+            // вызываем функцию для очищения активации объекта
+            over(id, 0) }, false);
+
+    // если кликнем на объект,
+    // то активация объекта при наведении на него курсора мыши не бцдет срабатывать
+    document.getElementById(id).addEventListener("click",
+        function() {
+            // создаем события для карточек, с помощью addEventListener
+            let persons = document.querySelectorAll('.person__card');
+            // изменяем коэффициент, который сообщает о том, что сработал клик
+            k = 1;
+            for (var n = 0; n < persons.length; n++) {
+                let personName = document.querySelector('div#' + persons[n].id + ' > div.person__name');
+                if (persons[n].id != id) {
+                    persons[n].style.opacity = 0.2;
+                    personName.style.opacity = 0;
+                } else {
+                    persons[n].style.opacity = 1;
+                    personName.style.opacity = 1;
+                    // задержка по времени
+                    // задается в миллисекундах
+                    setTimeout(function() {
+                        // скроллим по горизотали до объекта, на которую кликнули
+                        // пытаемся задать плавную прокрутку - smooth
+                        document.getElementById(id).scrollIntoView({
+                            inline: "center",
+                            behavior: "smooth"
+                        });
+                    }, 200);
+
+                    let personBtn = document.querySelector('.content__desc');
+                    personBtn.innerHTML = '<div>узнать больше</div>';
+                    let personBtnClick = document.querySelector('.content__desc > div');
+                    personBtnClick.addEventListener("click",
+                        function() {
+                            divPerson.style.padding = '0';
+                            divPerson.style.justifyContent = 'center';
+                            circle.style.width = '480vw';
+                            circle.style.height = '480vh';
+                            circle.style.background = 'white';
+                            for (let z = 0; z < persons.length; z++) {
+                                if (persons[z].id != id) {
+                                    persons[z].style.display = 'none';
+                                }
+                            }
+                        });
+                }
+            }
+        }, false);
+
 }
 
 // создаем все карточки с помощью перебора элементов массива и
@@ -144,72 +222,12 @@ for (var i = 0; i < student.length; i++) {
     createPerson(student[i][0], student[i][1], student[i][2]);
 }
 
-// создаем события для карточек, с помощью addEventListener
-var persons = document.querySelectorAll('.person__card');
-// перебор объектов для создания событий для каждого из них
-for (var i = 0; i < persons.length; i++) {
-    // находим id объектов
-    let id = persons[i].id;
-    // если объекты имеют идентификаторы start и finish,
-    // то события не добавляем
-    if ((id != 'start') || (id != 'finish')) {
-        // событие для наведения курсора на объект - mouseover
-        document.getElementById(id).addEventListener("mouseover",
-            function() {
-                // вызываем функцию для активации объектов
-                over(id, 1);
-                if (k == 0) {
-                    setTimeout(function() {
-                        // скроллим по горизотали до объекта, на которую указываем
-                        // пытаемся задать плавную прокрутку - smooth
-                        document.getElementById(id).scrollIntoView({
-                            inline: "center",
-                            behavior: "smooth"
-                        });
-                    }, 200);
-                }
-            }, false);
-        document.getElementById(id).addEventListener("mouseout",
-            function() {
-                // вызываем функцию для очищения активации объекта
-                over(id, 0) }, false);
-        // если кликнем на объект,
-        // то активация объекта при наведении на него курсора мыши не бцдет срабатывать
-        document.getElementById(id).addEventListener("click",
-            function() {
-                // коэффициент, который сообщает о том, что сработал клик
-                k = 1;
-                for (var n = 0; n < persons.length; n++) {
-                    if (persons[n].id != id) {
-                        persons[n].style.opacity = 0.1;
-                    } else {
-                        persons[n].style.opacity = 1;
-                        // задержка по времени
-                        // задается в миллисекундах
-                        setTimeout(function() {
-                            // скроллим по горизотали до объекта, на которую кликнули
-                            // пытаемся задать плавную прокрутку - smooth
-                            document.getElementById(id).scrollIntoView({
-                                inline: "center",
-                                behavior: "smooth"
-                            });
-                        }, 200);
-                    }
-
-                }
-            }, false);
-    }
-}
-
 // при загрузке страницы первый объект оказывается по центру
 // в данном случае - объект с идентификатором michael
 document.getElementById('michael').scrollIntoView({
     inline: "center",
     behavior: "smooth"
 });
-
-// находим объект с классом circle
-circle = document.querySelector('.circle');
 
 // объект с селектором .circle начинает отслеживание за курсором
 document.body.addEventListener("mouseover",
