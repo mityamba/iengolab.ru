@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>iengolab's chat</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <link rel="shortcut icon" href="../www/img/logo/favicon.svg">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script type="text/javascript" src="../www/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div align="center" class="block">
+        <p id="note"></p>
+        <input id="login" type="text" placeholder="Никнэйм" autocomplete="off" required /><br />
+        <input id="text" type="text" placeholder="Пиши..." autocomplete="off" required /><br />
+        <input id="send" type="button" value="Отправить в чат" onclick="getData();" />
+
+        <div style="width:100%;" align="center">
+            <p>--- чатик обновляется каждые 5 сек ---</p>
+            <div id="content">обновление...</div>
+        </div><br><br>
+
+    </div>
+    <script>
+        setInterval(function() {
+            let date = new Date().getTime() / 1000;
+            let link = 'text/content.txt?cache=' + date;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', link, false);
+            xhr.send();
+            let list = xhr.responseText;
+            document.getElementById('content').innerHTML = list;
+        }, 5000);
+
+        function getData() {
+
+            let login = document.getElementById('login').value;
+            let text = document.getElementById('text').value;
+            let send = document.getElementById('send');
+            let note = document.getElementById('note');
+
+            if (text != '' && login != '') {
+
+                let dataes = '<b>' + login + '</b>: ' + text;
+                $.ajax({
+                    type: "POST",
+                    url: "add.php",
+                    data: 'data=' + dataes,
+                    success: function(response) {
+                        return;
+                    }
+                });
+                send.value = 'Отправлено!';
+                console.log('send');
+                send.style.background = 'green';
+                send.style.borderColor = 'green';
+
+                document.getElementById('text').value = '';
+                setTimeout(function() {
+                    send.value = 'Отправить в чат';
+                    send.style.background = '#999';
+                    send.style.borderColor = '#999';
+                }, 2000);
+            }
+            else {
+                note.innerHTML = 'Заполните поля!';
+                setTimeout(function() {
+                    note.innerHTML = '';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+
+</html>
