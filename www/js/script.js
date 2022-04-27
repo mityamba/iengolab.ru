@@ -207,6 +207,17 @@ function createPerson(id, format, name) {
                             for (let z = 0; z < persons.length; z++) {
                                 if (persons[z].id != id) {
                                     persons[z].style.display = 'none';
+                                } else {
+                                    let divPersonBlockImgLight = document.createElement('img');
+                                    divPersonBlockImgLight.src = 'img/animation/light.svg';
+                                    divPersonBlockImgLight.className = 'person__img_light';
+                                    persons[z].append(divPersonBlockImgLight);
+                                    setTimeout(function() {
+                                        divPersonBlockImgLight.style.transform = 'rotateX(180deg)';
+                                    }, 600);
+                                    setTimeout(function() {
+                                        divPersonBlockImgLight.style.transform = 'rotateY(180deg)';
+                                    }, 1200);
                                 }
                             }
                         });
