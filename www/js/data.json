@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "id_name": "michael",
+    "name": "Михаил",
+    "name_full": "Михаил",
+    "surname": "Никифоров",
+    "name_sec": "Афанасьевич",
+    "card_format": "svg"
+  },
+  {
+    "id": 2,
+    "id_name": "danil",
+    "name": "Данил",
+    "name_full": "Данил",
+    "surname": "Андреев",
+    "name_sec": "Александрович",
+    "card_format": "png"
+  },
+  {
+    "id": 3,
+    "id_name": "luba",
+    "name": "Люба",
+    "name_full": "Любовь",
+    "surname": "Архипова",
+    "name_sec": "Николаевна",
+    "card_format": "png"
+  },
+  {
+    "id": 4,
+    "id_name": "sergey",
+    "name": "Серёжа",
+    "name_full": "Сергей",
+    "surname": "Скрябин",
+    "name_sec": "Александрович",
+    "card_format": "svg"
+  },
+  {
+    "id": 5,
+    "id_name": "stepan",
+    "name": "Стёпа",
+    "name_full": "Степан",
+    "surname": "Васильев",
+    "name_sec": "Владиславович",
+    "card_format": "png"
+  },
+  {
+    "id": 6,
+    "id_name": "tuskul",
+    "name": "Тускул",
+    "name_full": "Тускул",
+    "surname": "Емельянов",
+    "name_sec": "Алексеевич",
+    "card_format": "svg"
+  },
+  {
+    "id": 7,
+    "id_name": "venera",
+    "name": "Венера",
+    "name_full": "Венера",
+    "surname": "Филиппова",
+    "name_sec": "",
+    "card_format": "svg"
+  },
+  {
+    "id": 8,
+    "id_name": "sakhaya",
+    "name": "Сахаайа",
+    "name_full": "Сахаайа",
+    "surname": "Николаева",
+    "name_sec": "Владимировна",
+    "card_format": "svg"
+  },
+  {
+    "id": 9,
+    "id_name": "valeria",
+    "name": "Лера",
+    "name_full": "Валерия",
+    "surname": "Заболоцкая",
+    "name_sec": "Вячеславовна",
+    "card_format": "svg"
+  }
+]
